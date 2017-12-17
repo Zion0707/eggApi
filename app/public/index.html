@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>egg</title>
+</head>
+<body>
+	<div id="app">
+		{{ list }}
+	</div>
+
+<script src="js/vue.min.js"></script>
+<script src="js/axios.min.js"></script>
+<script>
+var vm = new Vue({
+	el :'#app',
+	data:{
+		list:[]
+	},
+	mounted(){
+		var _self = this;
+		axios.get('/list/0')
+		.then(function(data){
+			_self.list = data.data;
+		})
+	}
+})
+</script>
+</body>
+</html>
