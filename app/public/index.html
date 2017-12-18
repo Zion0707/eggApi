@@ -13,9 +13,13 @@
 	</div>
 	<ul>
 		<li v-for="el in list">
-			{{ el.id }}{{ el.name }}
+			{{ el.id }}. {{ el.name }}
 		</li>
 	</ul>
+	<div>
+		<input type="text" placeholder="添加车辆品牌" v-model.trim="addCarName" @keyup.enter="addCar">
+		<button @click="addCar">添加</button>
+	</div>
 	
 
 </div>
@@ -26,20 +30,24 @@ var vm = new Vue({
 	el :'#app',
 	data:{
 		list:[],
-		carsName:''
+		carsName:'',
+		addCarName:''
 	},
 	methods:{
+		//获取列表
 		carsList(){
 			var _self = this;
 			axios.get('/api/carsList')
 			.then(function(data){
 				var data = data.data;
-				_self.list = data.carsList;
+				_self.list = data.list;
 			})
 			.catch(function(err){
 				console.log(err);
 			})
 		},
+
+		//搜索
 		getCar(){
 			var _self = this;
 			axios.get('/api/findCar',{
@@ -49,14 +57,29 @@ var vm = new Vue({
 			})
 			.then(function(data){
 				var data = data.data;
-				var list = [];
-				list.push(data.res)
-				_self.list = list;
+				_self.list = data.list;
 			})
 			.catch(function(err){
 				console.log(err);
 			})
+		},
+		
+		//添加
+		addCar(){
+			var _self = this;
+			if ( _self.addCarName ) {
+				axios.post('/api/addCar',{
+					name:_self.addCarName
+				})
+				.then(function(data){
+					console.log(data)
+				})
+				.catch(function(err){
+					console.log(err)
+				})
+			}
 		}
+
 	},
 	mounted(){
 
