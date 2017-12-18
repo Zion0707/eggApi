@@ -5,24 +5,63 @@
 	<title>egg</title>
 </head>
 <body>
-	<div id="app">
-		{{ list }}
-	</div>
+<div id="app">
 
+	<div>
+		<input type="text" placeholder="搜索你想要的品牌" v-model.trim="carsName" @keyup.enter="getCar">
+		<button @click="getCar">搜索</button>
+	</div>
+	<ul>
+		<li v-for="el in list">
+			{{ el.id }}{{ el.name }}
+		</li>
+	</ul>
+	
+
+</div>
 <script src="js/vue.min.js"></script>
 <script src="js/axios.min.js"></script>
 <script>
 var vm = new Vue({
 	el :'#app',
 	data:{
-		list:[]
+		list:[],
+		carsName:''
+	},
+	methods:{
+		carsList(){
+			var _self = this;
+			axios.get('/api/carsList')
+			.then(function(data){
+				var data = data.data;
+				_self.list = data.carsList;
+			})
+			.catch(function(err){
+				console.log(err);
+			})
+		},
+		getCar(){
+			var _self = this;
+			axios.get('/api/findCar',{
+				params: {
+					name:_self.carsName 
+				}
+			})
+			.then(function(data){
+				var data = data.data;
+				var list = [];
+				list.push(data.res)
+				_self.list = list;
+			})
+			.catch(function(err){
+				console.log(err);
+			})
+		}
 	},
 	mounted(){
-		var _self = this;
-		axios.get('/list/0')
-		.then(function(data){
-			_self.list = data.data;
-		})
+
+		this.carsList();
+
 	}
 })
 </script>

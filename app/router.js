@@ -6,5 +6,6 @@
 module.exports = app => {
   const { router, controller } = app;
   router.get('/', controller.home.index);
-  router.get('/list/:id', controller.list.index);
+  router.get('/api/carsList', controller.carsList.carsList);
+  router.get('/api/findCar', controller.findCar.findCar);
 };
