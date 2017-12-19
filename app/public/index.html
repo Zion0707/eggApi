@@ -8,8 +8,8 @@
 <div id="app">
 
 	<div>
-		<input type="text" placeholder="搜索你想要的品牌" v-model.trim="carsName" @keyup.enter="getCar">
-		<button @click="getCar">搜索</button>
+		<input type="text" placeholder="搜索你想要的品牌" v-model.trim="carsName" @keyup.enter="findCar">
+		<button @click="findCar">搜索</button>
 	</div>
 	<ul>
 		<li v-for="el in list">
@@ -51,12 +51,10 @@ var vm = new Vue({
 		},
 
 		//搜索
-		getCar(){
+		findCar(){
 			var _self = this;
-			axios.get('/api/findCar',{
-				params: {
-					name:_self.carsName 
-				}
+			axios.post('/api/findCar',{
+				name:_self.carsName
 			})
 			.then(function(data){
 				var data = data.data;

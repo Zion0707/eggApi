@@ -6,7 +6,7 @@ class FindCarService extends Service{
 			api:'findCar',
 			code:0,
 			msg:'success',
-			list : [result]
+			list : result ? [result] : []
 		};
 	}
 } 
