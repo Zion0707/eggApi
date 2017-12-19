@@ -5,8 +5,9 @@ class AddCarService extends Service{
 		return {
 			api:'addCar',
 			code:0,
-			msg:'success'
+			msg:'success',
+			res : result
 		};
 	}
-}
+} 
 module.exports = AddCarService;

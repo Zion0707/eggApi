@@ -8,4 +8,6 @@ module.exports = app => {
  	router.get('/api/carsList', controller.carsList.carsList);
  	router.get('/api/findCar', controller.findCar.findCar);
  	router.post('/api/addCar', controller.addCar.addCar);
+ 	router.post('/api/delCar', controller.delCar.delCar);
+ 	router.post('/api/updateCar', controller.updateCar.updateCar)
 };

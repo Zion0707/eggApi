@@ -13,7 +13,10 @@
 	</div>
 	<ul>
 		<li v-for="el in list">
-			{{ el.id }}. {{ el.name }}
+			<span>{{ el.id }}. {{ el.name }}</span>
+			<a href="javascript:;" @click="delCar(el.id)">删除</a>
+			<input type="text" :value="el.name" :class="'car'+el.id">
+			<button @click="updateCar(el.id)">更改</button>
 		</li>
 	</ul>
 	<div>
@@ -72,14 +75,43 @@ var vm = new Vue({
 					name:_self.addCarName
 				})
 				.then(function(data){
-					console.log(data)
+					_self.carsList();
 				})
 				.catch(function(err){
 					console.log(err)
 				})
 			}
-		}
+		},
 
+		//删除
+		delCar( id ){
+			var _self = this;
+			axios.post('/api/delCar',{
+				id:id
+			})
+			.then(function(data){
+				_self.carsList();
+			})
+			.catch(function(err){
+				console.log(err)
+			})
+		},
+
+		//更改汽车名称
+		updateCar(id){
+			var _self = this;
+			axios.post('/api/updateCar',{
+				id:id,
+				name : document.querySelector('.car'+id).value
+			})
+			.then(function(data){
+				_self.carsList();
+			})
+			.catch(function(err){
+				console.log(err)
+			})
+		}
+		
 	},
 	mounted(){
 
